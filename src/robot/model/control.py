@@ -19,7 +19,6 @@ from typing import Any, cast, Literal, Sequence, TypeVar, TYPE_CHECKING
 from robot.utils import setter
 
 from .body import Body, BodyItem, BodyItemParent, BaseBranches
-from .keyword import Keywords
 from .modelobject import DataDict
 from .visitor import SuiteVisitor
 
