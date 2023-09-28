@@ -1,0 +1,39 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow checks out code, builds an image, performs a container image
+# scan with Anchore's Syft tool, and uploads the results to the GitHub Dependency
+# submission API.
+
+# For more information on the Anchore sbom-action usage
+# and parameters, see https://github.com/anchore/sbom-action. For more
+# information about the Anchore SBOM tool, Syft, see
+# https://github.com/anchore/syft
+name: SBOM scan
+
+on:
+  push:
+    branches: [ "master" ]
+
+permissions:
+  contents: write
+
+jobs:
+  - name: CycloneDX Python Generate SBOM
+  # You may pin to the exact commit or the version.
+  # uses: CycloneDX/gh-python-generate-sbom@39fe80937489538e12de5a7b427e078649ec44bb
+    uses: CycloneDX/gh-python-generate-sbom@v2.0.0
+    with:
+    # The path to a pip requirements file
+      input: # optional, default is ./requirements.txt
+    # Output filename
+      output: # optional, default is ./bom.xml
+    # Output format
+      format: # optional, default is xml
+        uses: anchore/sbom-action@bb716408e75840bbb01e839347cd213767269d4a
+        with:
+          image: "localbuild/testimage:latest"
+          artifact-name: image.spdx.json
+        dependency-snapshot: true
